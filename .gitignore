@@ -1,0 +1,7 @@
+node_modules/
+cdp-profile*/
+edge-profile*/
+data/database.json
+uploads/*
+!uploads/.gitkeep
+*.log

@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ruangkelas
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/me
+    envVars:
+      - key: NODE_ENV
+        value: production

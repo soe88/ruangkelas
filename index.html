@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RuangKelas</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <section id="landingView" class="landing-view">
+        <header class="landing-header">
+          <a class="brand" href="/">Ruang<span>Kelas</span></a>
+          <button class="button button-outline" data-action="open-login">Masuk</button>
+        </header>
+        <main class="hero">
+          <div>
+            <p class="eyebrow">PLATFORM BELAJAR ONLINE</p>
+            <h1>Belajar lebih mudah, tumbuh lebih hebat.</h1>
+            <p class="hero-copy">Kelola kelas, materi, dan perjalanan belajar dalam satu tempat.</p>
+            <button class="button button-primary" data-action="open-register">Mulai belajar</button>
+          </div>
+          <div class="hero-card">
+            <span class="hero-icon">R</span>
+            <h2>Ruang belajar personal</h2>
+            <p>Materi terarah dan pengalaman belajar yang sederhana.</p>
+          </div>
+        </main>
+      </section>
+
+      <section id="dashboardView" class="dashboard-view hidden">
+        <aside class="sidebar">
+          <a class="brand" href="/">Ruang<span>Kelas</span></a>
+          <div class="user-card">
+            <div id="userInitials" class="avatar">U</div>
+            <div><strong id="userName">Pengguna</strong><small id="userRole">Pelajar</small></div>
+          </div>
+          <nav>
+            <button class="nav-button active" data-view="home">Ringkasan</button>
+            <button class="nav-button student-only" data-view="courses">Kelas</button>
+            <button class="nav-button student-only" data-view="materials">Materi</button>
+            <button class="nav-button staff-only" data-view="admin">Panel kelas</button>
+          </nav>
+          <button id="logoutButton" class="nav-button logout">Keluar</button>
+        </aside>
+        <main class="content">
+          <header class="content-header">
+            <div><p class="eyebrow">RUANG BELAJAR</p><h2 id="pageTitle">Ringkasan</h2></div>
+            <span id="headerUser"></span>
+          </header>
+          <section id="homePage" class="page active">
+            <div class="welcome-card"><p class="eyebrow">SELAMAT DATANG</p><h1 id="welcomeName">Halo!</h1><p>Semua aktivitas belajar kamu ada di sini.</p></div>
+            <div id="homeStats" class="stats"></div>
+          </section>
+          <section id="coursesPage" class="page">
+            <div class="section-heading"><div><p class="eyebrow">PILIHAN BELAJAR</p><h1>Kelas tersedia</h1></div></div>
+            <div id="courseList" class="card-grid"></div>
+          </section>
+          <section id="materialsPage" class="page">
+            <div class="section-heading"><div><p class="eyebrow">MATERI BELAJAR</p><h1>Materi terbaru</h1></div></div>
+            <div id="materialList" class="card-grid"></div>
+            <div class="section-heading subsection-heading"><div><p class="eyebrow">PERTEMUAN ONLINE</p><h2>Zoom meeting mendatang</h2></div></div>
+            <div id="meetingList" class="card-grid"></div>
+          </section>
+          <section id="adminPage" class="page">
+            <div class="section-heading"><div><p class="eyebrow">RUANG KELOLA</p><h1>Panel kelas</h1></div><div class="action-group"><button class="button button-outline admin-only" data-action="open-user">Tambah akun</button><button class="button button-outline admin-only" data-action="open-course">Tambah kelas</button><button class="button button-outline" data-action="open-meeting">Buat Zoom meeting</button><button class="button button-primary" data-action="open-material">Tambah materi</button></div></div>
+            <div id="adminSummary" class="stats"></div>
+            <div class="section-heading subsection-heading"><div><p class="eyebrow">MANAJEMEN KELAS</p><h2>Daftar kelas</h2></div></div>
+            <div id="adminCourseList" class="admin-course-list"></div>
+            <div id="adminCourseDetail" class="course-detail hidden"></div>
+            <div class="section-heading subsection-heading"><div><p class="eyebrow">MANAJEMEN AKUN</p><h2>Daftar akun</h2></div></div>
+            <div id="adminUserList" class="admin-user-list"></div>
+            <div class="section-heading subsection-heading admin-only"><div><p class="eyebrow">VERIFIKASI</p><h2>Pengajuan akun guru</h2></div></div>
+            <div id="teacherApplicationList" class="admin-user-list admin-only"></div>
+            <div id="adminMaterialList" class="card-grid"></div>
+            <div class="section-heading subsection-heading"><div><p class="eyebrow">PERTEMUAN ONLINE</p><h2>Zoom meeting</h2></div></div>
+            <div id="adminMeetingList" class="card-grid"></div>
+          </section>
+        </main>
+      </section>
+    </div>
+
+    <div id="authModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <button class="modal-close" data-action="close-auth">×</button>
+        <p class="eyebrow">RUANGKELAS</p>
+        <h2 id="authTitle">Masuk ke akun</h2>
+        <form id="authForm">
+          <label id="nameField" class="hidden">Nama<input name="name" autocomplete="name" /></label>
+          <label id="roleField" class="hidden">Daftar sebagai<select id="roleSelect" name="role"><option value="siswa">Siswa</option><option value="guru">Guru (menunggu persetujuan admin)</option></select></label>
+          <label id="studentCourseField" class="hidden">Kelas siswa<select id="studentCourse" name="courseId" required disabled><option value="">Pilih kelas siswa</option></select></label>
+          <label>Email<input name="email" type="email" autocomplete="username" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+          <p id="authError" class="error"></p>
+          <button class="button button-primary full" type="submit">Lanjutkan</button>
+        </form>
+        <button id="authToggle" class="text-button" type="button">Belum punya akun? Daftar</button>
+      </div>
+    </div>
+
+    <div id="materialModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <button class="modal-close" data-action="close-material">×</button>
+        <p class="eyebrow">ADMIN</p><h2>Tambah materi</h2>
+        <form id="materialForm">
+          <label>Kelas<select id="materialCourse" name="courseId" required></select></label>
+          <label>Judul materi<input name="title" required /></label>
+          <label>Mata pelajaran<input name="subject" required /></label>
+          <label>Tipe<select name="type" required><option value="PDF">PDF</option><option value="Video">Video</option><option value="Dokumen">Dokumen</option></select></label>
+          <label>Upload file materi/video<input name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,video/*" /></label>
+          <label>Link eksternal (opsional)<input name="url" type="url" placeholder="https://..." /></label>
+          <p class="form-hint">Gunakan upload file atau link eksternal. Ukuran upload maksimal 25 MB.</p>
+          <p id="materialError" class="error"></p>
+          <button class="button button-primary full" type="submit">Simpan materi</button>
+        </form>
+      </div>
+    </div>
+    <div id="meetingModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <button class="modal-close" data-action="close-meeting">×</button>
+        <p class="eyebrow">ADMIN</p><h2>Buat Zoom meeting</h2>
+        <form id="meetingForm">
+          <label>Judul meeting<input name="title" required /></label>
+          <label>Mata pelajaran<input name="subject" required /></label>
+          <label>Waktu mulai<input name="startAt" type="datetime-local" required /></label>
+          <label>Durasi (menit)<input name="duration" type="number" min="15" value="60" required /></label>
+          <label>Link Zoom<input name="url" type="url" placeholder="https://zoom.us/j/..." required /></label>
+          <p id="meetingError" class="error"></p>
+          <button class="button button-primary full" type="submit">Simpan Zoom meeting</button>
+        </form>
+      </div>
+    </div>
+    <div id="userModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <button class="modal-close" data-action="close-user">×</button>
+        <p class="eyebrow">ADMIN</p><h2>Tambah akun</h2>
+        <form id="userForm">
+          <label>Nama<input name="name" required /></label>
+          <label>Email<input name="email" type="email" required /></label>
+          <label>Password<input name="password" type="password" minlength="6" required /></label>
+          <label>Role<select name="role" required><option value="guru">Guru</option><option value="siswa">Siswa</option></select></label>
+          <p id="userError" class="error"></p>
+          <button class="button button-primary full" type="submit">Buat akun</button>
+        </form>
+      </div>
+    </div>
+    <div id="courseModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <button class="modal-close" data-action="close-course">×</button>
+        <p class="eyebrow">ADMIN</p><h2>Tambah kelas</h2>
+        <form id="courseForm">
+          <label>Nama kelas<input name="title" required placeholder="Contoh: Kelas 7" /></label>
+          <label>Kategori<input name="category" required placeholder="Contoh: Matematika" /></label>
+          <label>Level<input name="level" required placeholder="Contoh: Pemula" /></label>
+          <label>Deskripsi<textarea name="description" rows="4" required></textarea></label>
+          <p id="courseError" class="error"></p>
+          <button class="button button-primary full" type="submit">Simpan kelas</button>
+        </form>
+      </div>
+    </div>
+    <div id="toast" class="toast"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "ruangkelas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Platform kelas privat online",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
